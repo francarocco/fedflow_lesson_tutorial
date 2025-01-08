@@ -13,13 +13,13 @@ from utilities.networks import *
 from fedflow import FedFlow
 
 
-n_steps_in = 9
-n_steps_out = 3
-n_features = 6 # 6 considered features
-epochs = 3
-num_clients = 5
-num_rounds = 25
-epochs_finetuning = 3
+n_steps_in = 9      # hi: history length -> number of samples used for prediction
+n_steps_out = 3     # ho: horizon -> number of future stops to predict
+n_features = 6      # number of considered features
+epochs = 3          # E: number of local epochs 
+num_clients = 5     # N: number of considered clients (i.e. transport companies)
+num_rounds = 25     # K: number of federated learning rounds
+epochs_finetuning = 3   # Ef: number of epochs used for fine-tuning 
 splits = range(5)
 
 print(tf.config.list_physical_devices('GPU'),flush=True)
@@ -77,12 +77,12 @@ for split in splits:
 
 
 
-    #opening average stops values for clients: 
+    # list of N context vectors, one for each client
     path_factors = f'{path_files}/context_vectors.pkl'
     with open(path_factors, 'rb') as f:
         context_vectors = pickle.load(f)
 
-    #opening average stops values for clients: 
+    # scaler 
     path_scaler = f'{path_files}/scalers/scaler_split{split}.pkl'
     with open(path_scaler, 'rb') as f:
         scaler = pickle.load(f)
@@ -92,7 +92,7 @@ for split in splits:
     input_shape = (n_steps_in,n_features)
     output_shape = n_steps_out
 
-    similarity_lists = ff.calculate_similarities(context_vectors) # calculate similarities among clients
+    similarity_lists = ff.calculate_similarities(context_vectors) # at round 0 the server calculates the similarities among clients
     ff.fedflow_models_generation(path_files,input_shape,output_shape,similarity_lists,X_train,y_train,X_val,y_val,split,epochs) # perform local models generation with FedFlow
-    ff.fedflow_finetuning(path_files,X_train,y_train,X_val,y_val,X_test,y_test,split,epochs_finetuning,scaler,n_steps_in,n_steps_out) # final fine-tuning for further personalization
+    ff.fedflow_finetuning(path_files,X_train,y_train,X_val,y_val,X_test,y_test,split,epochs_finetuning,scaler,n_steps_in,n_steps_out) # final fine-tuning for further personalization and testing
     
