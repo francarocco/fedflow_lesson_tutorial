@@ -15,7 +15,7 @@ from fedflow import FedFlow
 
 n_steps_in = 9      # hi: history length -> number of samples used for prediction
 n_steps_out = 3     # ho: horizon -> number of future stops to predict
-n_features = 6      # number of considered features
+n_features = 6      # number of considered features (occupancy, stop_id, month, weekday, timeslot, route_id)
 epochs = 3          # E: number of local epochs 
 num_clients = 5     # N: number of considered clients (i.e. transport companies)
 num_rounds = 25     # K: number of federated learning rounds

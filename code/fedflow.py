@@ -129,7 +129,7 @@ class FedFlow:
         for i in range(euclidean_distances.shape[0]): # for each client (row) 
             euclidean_distances_area = euclidean_distances[i,:]
             euclidean_distances_area = 1/(1+euclidean_distances_area) # converts distances into similarity scores using the formula: similarity = 1 / (1 + distance).
-            euclidean_distances_area = euclidean_distances_area/sum(euclidean_distances_area) # normalizes similarity scores for each client to sum to 1 to preserve the magnitude of the weights
+            euclidean_distances_area = euclidean_distances_area/sum(euclidean_distances_area) # normalizes similarity scores for each client to sum to 1 to preserve the magnitude of the parameters
             similarity_lists.append(euclidean_distances_area)
         return similarity_lists
 
@@ -189,6 +189,7 @@ class FedFlow:
             scaled_local_weight_list = list()
             local_weight_list = list() # list of dimension N, each element represent the local parameters of client i
             
+            # CLIENT SIDE
             for i in range(len(X_train)): # iterating client by client
                 # local training for round r
                 local_model = lstm_definition(input_shape, output_shape) # define the network structure
@@ -206,6 +207,8 @@ class FedFlow:
                 #clear session to free memory after each communication round
                 K.clear_session()
             
+
+            # SERVER SIDE
             # at the end of the round, the new parameters are calculated by the server
             updated_custom_global_weights = []   # list of dimension N, each element represent the updated parameters of client i 
             
