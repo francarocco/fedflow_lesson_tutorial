@@ -24,7 +24,9 @@ splits = range(5)
 
 print(tf.config.list_physical_devices('GPU'),flush=True)
 
-
+# the federated learning process is distributed, but because we are interested in evaluating accuracy, 
+# to facilitate validation of the framework we ran the process sequentially on a single node, 
+# where the server and clients run
 
 path_files = '../data/input_data'
 
@@ -75,7 +77,7 @@ for split in splits:
     X_test_global = np.load(path_X_test_global)
     y_test_global = np.load(path_y_test_global)
 
-
+    
 
     # list of N context vectors, one for each client
     path_factors = f'{path_files}/context_vectors.pkl'

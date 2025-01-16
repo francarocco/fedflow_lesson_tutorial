@@ -67,8 +67,8 @@ class FedFlow:
         Returns:
         -------
         updated_local_weights : np.ndarray
-            The aggregated and scaled weights for the client after applying the scaling factor 
-            and summing the scaled weights.
+            The aggregated and scaled parameters for the client after applying the scaling factor 
+            and summing the scaled parameters.
 
 
         Example Usage:
@@ -79,7 +79,7 @@ class FedFlow:
         #print(f'len local weight list: {len(local_weight_list)}', flush=True)
         #print(f'client scaling factor: {len(client_scaling_factor)}', flush=True)
         temp_weight_i = []
-        for j in range(num_clients): # iterating client by client
+        for j in range(num_clients): # iterating client by client for scaling the parameters
             weight_j = self.scale_model_weights(local_weight_list[j],client_scaling_factor[j]) # Scale the weights of client j by the corresponding scaling factor (alpha_i,j)
             temp_weight_i.append(weight_j)
         updated_local_weigths = self.sum_scaled_weights(temp_weight_i) # sum to performe the average
@@ -216,8 +216,6 @@ class FedFlow:
                 client_scaling_factor = self.calculate_scaling_factor(similarity_lists,i) # taking the weights for client i, based on the similarities
                 updated_local_weigths = self.custom_scaled_weights_client(local_weight_list, client_scaling_factor) # calculate the new parameters for client i
                 updated_custom_global_weights.append(updated_local_weigths) # append the parameters to the list of updated parameters
-
-            
 
             #update the parameters
             custom_global_weights = updated_custom_global_weights.copy()
