@@ -95,6 +95,6 @@ for split in splits:
     output_shape = n_steps_out
 
     similarity_lists = ff.calculate_similarities(context_vectors) # at round 0 the server calculates the similarities among clients
-    ff.fedflow_models_generation(path_files,input_shape,output_shape,similarity_lists,X_train,y_train,X_val,y_val,split,epochs) # perform local models generation with FedFlow
+    ff.fedflow_models_generation(path_files,input_shape,output_shape,similarity_lists,X_train,y_train,X_val,y_val,split,epochs,num_rounds) # perform local models generation with FedFlow
     ff.fedflow_finetuning(path_files,X_train,y_train,X_val,y_val,X_test,y_test,split,epochs_finetuning,scaler,n_steps_in,n_steps_out) # final fine-tuning for further personalization and testing
     
