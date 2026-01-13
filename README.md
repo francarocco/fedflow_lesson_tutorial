@@ -1,4 +1,4 @@
-# FedFlow: A Personalized Federated Learning Framework for Passenger Flow Prediction
+# Tutorial for Lecture - FedFlow: A Personalized Federated Learning Framework for Passenger Flow Prediction - Leibniz University of Hannover 2026
 
 In the Intelligent Public Transportation Systems (IPTS) domain, predicting the number of commuters on-board, entering or leaving a metro train or a bus, i.e. the Passenger Flow (PF), is crucial for optimizing resource allocation and enhancing commuter satisfaction. 
 In urban scenarios, the public transport system is often managed by distinct competing mobility providers. Traditional centralized machine learning models for PF prediction usually require data sharing among such competitors, leading to privacy and economic concerns. 
